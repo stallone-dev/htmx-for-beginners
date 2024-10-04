@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "ecmel.vscode-html-css",
+        "editorconfig.editorconfig",
+        "denoland.vscode-deno",
+        "ms-vscode.vscode-typescript-next",
+        "christian-kohler.path-intellisense",
+        "humao.rest-client",
+        "pushqrdx.inline-html"
+    ]
+}

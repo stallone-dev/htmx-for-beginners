@@ -1,0 +1,115 @@
+/*
+    My default DenoJS settings / configs from general projects
+    Version: 2024/09
+    
+    Link: https://gist.github.com/stallone-dev/285b551c5368ad15185f66aecc0a6917
+    
+    Based on https://docs.deno.com/runtime/fundamentals/configuration/
+*/
+
+{
+  // ======= Dependency area =======
+  "imports": {
+      // Relative local imports
+      "~/":"./",
+      // "~path/": "~/path/to/src/folder",
+
+      // Testing packages
+      // For more details see: https://docs.deno.com/runtime/fundamentals/testing/#writing-tests
+      "@std/expect": "jsr:@std/expect@>=1.0",
+      "@std/testing": "jsr:@std/testing@>=1.0",
+    
+      // Dependencies
+      "@std/path": "jsr:@std/path@^1.0.6",
+      "@oak": "jsr:@oak/oak@^17.0.0"
+  },
+
+  // Unstable features from DenoJS
+  "unstable": [],
+
+  // Another compiler configs
+  "compilerOptions": {
+      // From web development, add this options
+      // For more details see: https://docs.deno.com/runtime/reference/ts_config_migration/#using-the-%22lib%22-property
+
+      // "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
+  },
+
+  // ======= Tasks area =======
+
+  // Run with "deno task __COMMAND__"
+  "tasks": {
+      "start": "", // Configure from main project command
+      "build": "", // Configure from general build project
+      
+      // Coverage report configs, NEEDS lcov package on system
+      "coverage:report": "deno task coverage ; deno coverage ./coverage-log --lcov > ./coverage/coverage.lcov ; genhtml -o ./coverage ./coverage/coverage.lcov",
+      "coverage:dev": "deno task coverage ; deno coverage ./coverage-log",
+      "coverage": "deno task test --reporter=dot --coverage=./coverage-log",
+          
+      // Tests on development process
+      "test:dev": "deno task test --reporter=dot --watch",
+      "test": "deno test --env-file=.env.development --allow-all"
+  },
+
+  // Test folders
+  "test": {
+      "include": ["./test"],
+      "exclude": ["./test/specific-test-to-ignore.test.ts"]
+  },
+
+  // ======= JSR publish area =======
+
+//   "name": "__PROJECT_NAME__",
+//   "version": "0.0.1",
+//   "exports": "./mod.ts",
+//   "license": "MPL-2.0",
+
+//   "publish": {
+//       "exclude": ["./test", ".editorconfig", ".vscode", ".github", ".env*"],
+//       "include": [".env.example"]
+//   },
+
+  // ======= Source code standardization area =======
+
+  // Main formatter for source code styling
+  // For more details see https://docs.deno.com/runtime/fundamentals/linting_and_formatting/#available-options
+  "fmt": {
+      "exclude": ["./build/"],
+      "lineWidth": 80,
+      "indentWidth": 4,
+      "useTabs": false,
+      "semiColons": true,
+      "singleQuote": false,
+      "proseWrap": "preserve"
+  },
+
+  // Main linter for source code standardization
+  // For more details see https://lint.deno.land/?q=&all=on
+  "lint": {
+      "exclude": ["!*.ts"],
+      "rules": {
+          "tags": ["recommended"],
+          "include": [
+              "eqeqeq",
+              "explicit-function-return-type",
+              "no-await-in-loop",
+              "no-boolean-literal-for-arguments",
+              "no-console",
+              "no-const-assign",
+              "no-eval",
+              "no-external-import",
+              "no-inferrable-types",
+              "no-non-null-assertion",
+              "no-self-compare",
+              "no-sparse-arrays",
+              "no-sync-fn-in-async-fn",
+              "no-throw-literal",
+              "no-undef",
+              "single-var-declarator",
+              "triple-slash-reference",
+              "verbatim-module-syntax"
+          ]
+      }
+  }
+}
